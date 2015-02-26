@@ -22,7 +22,8 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "finatra" % "1.6.0",
   "com.twitter" %% "scrooge-core" % "3.17.0",
   "com.typesafe.play" %% "play-json" % "2.3.5",
-  "org.scalatest" %% "scalatest" % "1.9.2" % "test"
+  "org.scalatest" %% "scalatest" % "1.9.2" % "test",
+  "com.twitter" %% "finagle-oauth2" % "0.1.3"
 )
 
 //"com.twitter" %% "finagle-oauth2" % "0.1.4"
