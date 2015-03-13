@@ -19,6 +19,9 @@ https://github.com/twitter/util/blob/master/util-app/src/main/scala/com/twitter/
 
 ## Notes
 
+* http://oauthbible.com/
+
+
 
 
 
