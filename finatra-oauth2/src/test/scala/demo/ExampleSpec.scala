@@ -2,7 +2,7 @@ package demo
 
 
 import com.twitter.finatra.test.SpecHelper
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{SequentialNestedSuiteExecution, Matchers, FlatSpec}
 import play.api.libs.json.{Writes, Reads, Format, Json}
 import demo.domain.ExampleReq
 import demo.util.IntError
@@ -11,7 +11,7 @@ import org.apache.commons.codec.binary.Base64
 import scala.util.Random
 
 
-class ExampleSpec extends FlatSpec with Matchers with SpecHelper {
+class ExampleSpec extends FlatSpec with Matchers with SpecHelper with SequentialNestedSuiteExecution {
   def log(s: String) = {
     info(" ---> " + s)
   }
@@ -19,7 +19,7 @@ class ExampleSpec extends FlatSpec with Matchers with SpecHelper {
   implicit val exampleReqReads: Reads[ExampleReq] = Json.reads[ExampleReq]
   implicit val exampleReqWrites: Writes[ExampleReq] = Json.writes[ExampleReq]
   val server = ApiHttpServer
-  var accessToken = "token1"
+  var accessToken = ""
   val clientCred = "client_id:client_secret"
   val clientAuth:String = new String(Base64.encodeBase64(clientCred.getBytes),"UTF-8")
   
@@ -30,7 +30,8 @@ class ExampleSpec extends FlatSpec with Matchers with SpecHelper {
     Map("Authorization"->s"Basic $clientAuth"))
     log("Res body: " + response.body)
     log("Res headers: " + response.getHeaders)
-    (Json.parse(response.body) \ "access_token").as[String] should equal(accessToken)
+    accessToken = (Json.parse(response.body) \ "access_token").as[String]
+    accessToken should equal(accessToken)
     //(Json.parse(response.body) \ "example" \ "param1").as[String] should equal("valueParam1")
     response.code should equal(200)
   }
